@@ -1,0 +1,14 @@
+.data-table {
+    width: 100%;
+    border: 1px solid darkgray;
+    background-color: lightgray;
+}
+
+.data-table.hover {
+    border: 1px solid darkgray;
+    background-color: white;
+}
+
+.data-table td {
+    word-break: break-all;
+}
