@@ -5,6 +5,7 @@
       <w>dragover</w>
       <w>mousemove</w>
       <w>mouseup</w>
+      <w>onload</w>
       <w>onmousedown</w>
       <w>onmouseup</w>
       <w>tbody</w>
