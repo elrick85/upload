@@ -1,3 +1,7 @@
+.widget {
+    padding: 10px;
+}
+
 .data-table {
     width: 100%;
     border: 1px solid darkgray;
@@ -8,13 +12,14 @@
 .data-table th {
     height: 30px;
     background-color: gray;
+    padding: 3px;
 }
 
-.data-table th:first-child{
+.data-table th:first-child {
     text-align: left;
 }
 
-.data-table th:last-child{
+.data-table th:last-child {
     text-align: right;
 }
 

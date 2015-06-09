@@ -6,6 +6,7 @@
       <w>mousemove</w>
       <w>mouseup</w>
       <w>onmousedown</w>
+      <w>onmouseup</w>
       <w>tbody</w>
     </words>
   </dictionary>

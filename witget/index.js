@@ -7,41 +7,39 @@
     var currenttable;
 
     document.addEventListener("mouseup", function(ev) {
-        if (!currenttable) {
-            return;
-        }
-
-        var coords = currenttable.mouseCoords(ev);
-
-        if (currenttable.dragObject) {
-            currenttable.position = currenttable.getPosition(currenttable.element);
-
-            if (coords.x < currenttable.position.x || coords.x > currenttable.position.right || coords.y < currenttable.position.y || coords.y > currenttable.position.bottom) {
-                currenttable._removeRow(currenttable.dragObject.element);
+        setTimeout(function() {
+            if (!currenttable) {
+                return;
             }
 
-            currenttable.dragObject = null;
-            //currenttable.onDrop(currenttable.table, droppedRow);
+            var coords = currenttable.mouseCoords(ev);
 
-            currenttable = null;
-        }
+            if (currenttable.dragObject) {
+                currenttable.position = currenttable.getPosition(currenttable.element);
+
+                if (coords.x < currenttable.position.x || coords.x > currenttable.position.right || coords.y < currenttable.position.y || coords.y > currenttable.position.bottom) {
+                    currenttable._removeRow(currenttable.dragObject.element);
+                }
+
+                currenttable.dragObject = null;
+                currenttable = null;
+            }
+        }, 0);
     });
 
     function Widget(element) {
-        // wrapper
         var self = this;
-        self.element = element;
-        self.wrapper = document.createElement("div");
-        self.wrapper.className = "wrapper";
-        element.parentElement.insertBefore(self.wrapper, element);
-        self.wrapper.appendChild(element);
 
-        element.innerHTML = "<table class=\"data-table\">" +
+        self.element = element;
+
+        self.element.innerHTML = "<table class=\"data-table\">" +
             "<colgroup><col width=\"200\"><col width=\"70\"><col width=\"130\"></colgroup>" +
             "<thead><tr><th>Name</th><th>Size</th><th>date modified</th></tr></thead>" +
             "<tbody>" + placeholderTmpl + "</tbody>";
 
-        self.table = element.querySelector("table");
+        self.source = [];
+
+        self.table = self.element.querySelector("table");
 
         var onDragover = function(e) {
             e.preventDefault();
@@ -59,26 +57,27 @@
         var onDrop = function(e) {
             e.preventDefault();
 
-            var file = e.dataTransfer.files[0];
+            var files = e.dataTransfer.files;
 
             self.table.className = self.table.className.replace(" hover", "");
-            file && self._addRow(file);
+            var i = 0, length = files.length;
+
+            for (; i < length; i++) {
+                files[i] && self._addRow(files[i]);
+            }
         };
 
-        var nodeList = self.table.querySelectorAll("td");
-        nodeList.ondragover = onDragover;
-        nodeList.ondragleave = onDragleave;
-
+        self.position = self.getPosition(element);
         self.table.ondragover = onDragover;
         self.table.ondragleave = onDragleave;
         self.table.ondrop = onDrop;
-        self.position = self.getPosition(element);
-
-        element.addEventListener("mouseup", function() {
+        self.element.onmouseover = onDragover;
+        self.element.onmouseleave = onDragleave;
+        self.element.onmouseup = function() {
             if (!self.dragObject) {
                 self._addRow(currenttable.dragObject.data);
             }
-        });
+        };
     }
 
     Widget.prototype.getPosition = function(e) {
@@ -100,12 +99,9 @@
     };
 
     Widget.prototype.mouseCoords = function(ev) {
-        if (ev.pageX || ev.pageY) {
-            return { x: ev.pageX, y: ev.pageY };
-        }
         return {
-            x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
-            y: ev.clientY + document.body.scrollTop - document.body.clientTop
+            x: ev.clientX,
+            y: ev.clientY
         };
     };
 
@@ -130,6 +126,10 @@
         var self = this,
             tbody = this.table.querySelector("tbody");
 
+        var index = Array.prototype.indexOf.call(tbody.querySelectorAll("tr"), row);
+
+        self.source.splice(index, 1);
+
         tbody.removeChild(row);
         !tbody.querySelectorAll("tr").length && (tbody.innerHTML = placeholderTmpl);
         self.position = self.getPosition(self.element);
@@ -138,9 +138,32 @@
     // add row to table.
     Widget.prototype._addRow = function(data) {
         var self = this;
-        var row = document.createElement("tr"),
-            tbody = this.table.querySelector("tbody"),
-            placeholder = tbody.querySelector("tr.placeholder");
+        var tbody = self.table.querySelector("tbody"),
+            placeholder = tbody.querySelector("tr.placeholder"),
+            model = {
+                name: data.name,
+                size: data.size,
+                lastModifiedDate: data.lastModifiedDate
+            },
+            row = createRow(model);
+
+        placeholder && tbody.removeChild(placeholder);
+        self.makeDraggable(row, model);
+        tbody.appendChild(row);
+        self.source.push(model);
+
+        self.position = self.getPosition(self.element);
+    };
+
+    Widget.prototype.serialize = function() {
+        return {
+            data: this.source,
+            total: this.source.length
+        };
+    };
+
+    function createRow(data) {
+        var row = document.createElement("tr");
 
         row.innerHTML = "<td></td><td></td><td></td>";
 
@@ -149,16 +172,8 @@
         cells[1].appendChild(document.createTextNode(data.size));
         cells[2].appendChild(document.createTextNode(formatDate(data.lastModifiedDate)));
 
-        placeholder && tbody.removeChild(placeholder);
-        this.makeDraggable(row, data);
-        tbody.appendChild(row);
-
-        self.position = self.getPosition(self.element);
-    };
-
-    /*Widget.prototype.serialize = function() {
-
-    };*/
+        return row;
+    }
 
     // Format input date.
     function formatDate(date) {
