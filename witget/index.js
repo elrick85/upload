@@ -4,6 +4,10 @@
 (function(window) {
 
     var placeholderTmpl = "<tr class=\"placeholder\"><td colspan=\"3\">Drop file</td></tr>";
+    var widgetTmpl = "<table class=\"data-table\">" +
+        "<colgroup><col width=\"200\"><col width=\"70\"><col width=\"130\"></colgroup>" +
+        "<thead><tr><th>Name</th><th>Size</th><th>date modified</th></tr></thead>" +
+        "<tbody>" + placeholderTmpl + "</tbody>";
     var currenttable;
 
     document.addEventListener("mouseup", function(ev) {
@@ -27,18 +31,17 @@
         }, 0);
     });
 
+    /**
+     * Widget module.
+     * @param element
+     * @constructor
+     */
     function Widget(element) {
         var self = this;
 
         self.element = element;
-
-        self.element.innerHTML = "<table class=\"data-table\">" +
-            "<colgroup><col width=\"200\"><col width=\"70\"><col width=\"130\"></colgroup>" +
-            "<thead><tr><th>Name</th><th>Size</th><th>date modified</th></tr></thead>" +
-            "<tbody>" + placeholderTmpl + "</tbody>";
-
+        self.element.innerHTML = widgetTmpl;
         self.source = [];
-
         self.table = self.element.querySelector("table");
 
         var onDragover = function(e) {
@@ -80,24 +83,34 @@
         };
     }
 
-    Widget.prototype.getPosition = function(e) {
+    /**
+     * Return position of element.
+     * @param element
+     * @returns {{x: number, y: number, right: number, bottom: number}}
+     */
+    Widget.prototype.getPosition = function(element) {
         var left = 0;
         var top = 0;
-        var right = e.offsetWidth;
-        var bottom = e.offsetHeight;
+        var right = element.offsetWidth;
+        var bottom = element.offsetHeight;
 
-        while (e.offsetParent) {
-            left += e.offsetLeft;
-            top += e.offsetTop;
-            e = e.offsetParent;
+        while (element.offsetParent) {
+            left += element.offsetLeft;
+            top += element.offsetTop;
+            element = element.offsetParent;
         }
 
-        left += e.offsetLeft;
-        top += e.offsetTop;
+        left += element.offsetLeft;
+        top += element.offsetTop;
 
         return { x: left, y: top, right: left + right, bottom: top + bottom };
     };
 
+    /**
+     * Return pointer position.
+     * @param ev
+     * @returns {{x: (Number|number), y: (number|Number)}}
+     */
     Widget.prototype.mouseCoords = function(ev) {
         return {
             x: ev.clientX,
@@ -105,6 +118,11 @@
         };
     };
 
+    /**
+     * Make row draggable.
+     * @param item
+     * @param data
+     */
     Widget.prototype.makeDraggable = function(item, data) {
         var self = this;
 
@@ -122,6 +140,11 @@
         item.style.cursor = "move";
     };
 
+    /**
+     * Remove existing row.
+     * @param row
+     * @private
+     */
     Widget.prototype._removeRow = function(row) {
         var self = this,
             tbody = this.table.querySelector("tbody");
@@ -135,7 +158,11 @@
         self.position = self.getPosition(self.element);
     };
 
-    // add row to table.
+    /**
+     * Insert row in widget.
+     * @param data
+     * @private
+     */
     Widget.prototype._addRow = function(data) {
         var self = this;
         var tbody = self.table.querySelector("tbody"),
@@ -155,6 +182,10 @@
         self.position = self.getPosition(self.element);
     };
 
+    /**
+     * Serialize widget source.
+     * @returns {{data: Array, total: Number}}
+     */
     Widget.prototype.serialize = function() {
         return {
             data: this.source,
@@ -162,6 +193,7 @@
         };
     };
 
+    // Create row from data.
     function createRow(data) {
         var row = document.createElement("tr");
 
@@ -186,6 +218,7 @@
         return day + "." + month + "." + date.getFullYear()
     }
 
+    // Widget interface.
     window.uploadWidget = {
         create: function(element) {
             return new Widget(element);

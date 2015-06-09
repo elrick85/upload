@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f734fc1-c0a5-4861-9897-87a73ad000e1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/witget/index.js" afterPath="$PROJECT_DIR$/witget/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/zismailov.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/zismailov.xml" />
     </list>
     <ignored path="upload.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,30 +37,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13538112">
-              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/witget/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state vertical-scroll-proportion="1.9340159">
+              <caret line="156" column="82" selection-start-line="156" selection-start-column="67" selection-end-line="156" selection-end-column="82" />
               <folding>
-                <element signature="e#1450#1637#0" expanded="false" />
-                <element signature="e#1678#1800#0" expanded="false" />
-                <element signature="e#1836#2157#0" expanded="false" />
-                <element signature="e#2654#3057#0" expanded="false" />
-                <element signature="e#3108#3196#0" expanded="false" />
-                <element signature="e#4683#4787#0" expanded="false" />
-                <element signature="e#4819#5222#0" expanded="false" />
-                <element signature="e#5280#5504#0" expanded="false" />
+                <element signature="e#517#1208#0" expanded="false" />
+                <element signature="e#1216#1291#0" expanded="true" />
+                <element signature="e#1548#1735#0" expanded="false" />
+                <element signature="e#1776#1898#0" expanded="false" />
+                <element signature="e#1934#2255#0" expanded="false" />
+                <element signature="e#2709#2849#0" expanded="true" />
+                <element signature="e#3367#3486#0" expanded="true" />
+                <element signature="e#3630#3706#0" expanded="true" />
+                <element signature="e#3765#4068#0" expanded="false" />
+                <element signature="e#4075#4148#0" expanded="true" />
+                <element signature="e#4590#4665#0" expanded="true" />
+                <element signature="e#5284#5374#0" expanded="true" />
+                <element signature="e#5584#5987#0" expanded="false" />
+                <element signature="e#6045#6269#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -96,8 +101,8 @@
       <list>
         <option value="$PROJECT_DIR$/witget/styles.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/witget/index.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/witget/index.js" />
       </list>
     </option>
   </component>
@@ -260,7 +265,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433854793614</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Small fix">
+      <created>1433854909418</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1433854909418</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -294,7 +305,8 @@
     <MESSAGE value="Add drag'n'drop." />
     <MESSAGE value="Fix comments." />
     <MESSAGE value="Add serialize method. Fix bugs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add serialize method. Fix bugs." />
+    <MESSAGE value="Small fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -325,14 +337,20 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1450#1637#0" expanded="false" />
-            <element signature="e#1678#1800#0" expanded="false" />
-            <element signature="e#1836#2157#0" expanded="false" />
-            <element signature="e#2654#3057#0" expanded="false" />
-            <element signature="e#3108#3196#0" expanded="false" />
-            <element signature="e#4683#4787#0" expanded="false" />
-            <element signature="e#4819#5222#0" expanded="false" />
-            <element signature="e#5280#5504#0" expanded="false" />
+            <element signature="e#517#1208#0" expanded="false" />
+            <element signature="e#1216#1291#0" expanded="true" />
+            <element signature="e#1548#1735#0" expanded="false" />
+            <element signature="e#1776#1898#0" expanded="false" />
+            <element signature="e#1934#2255#0" expanded="false" />
+            <element signature="e#2709#2849#0" expanded="true" />
+            <element signature="e#3367#3486#0" expanded="true" />
+            <element signature="e#3630#3706#0" expanded="true" />
+            <element signature="e#3765#4068#0" expanded="false" />
+            <element signature="e#4075#4148#0" expanded="true" />
+            <element signature="e#4590#4665#0" expanded="true" />
+            <element signature="e#5284#5374#0" expanded="true" />
+            <element signature="e#5584#5987#0" expanded="false" />
+            <element signature="e#6045#6269#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -356,23 +374,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/witget/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding>
-            <element signature="e#1450#1637#0" expanded="false" />
-            <element signature="e#1678#1800#0" expanded="false" />
-            <element signature="e#1836#2157#0" expanded="false" />
-            <element signature="e#2654#3057#0" expanded="false" />
-            <element signature="e#3108#3196#0" expanded="false" />
-            <element signature="e#4683#4787#0" expanded="false" />
-            <element signature="e#4819#5222#0" expanded="false" />
-            <element signature="e#5280#5504#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/witget/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -383,9 +384,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13538112">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/witget/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9340159">
+          <caret line="156" column="82" selection-start-line="156" selection-start-column="67" selection-end-line="156" selection-end-column="82" />
+          <folding>
+            <element signature="e#517#1208#0" expanded="false" />
+            <element signature="e#1216#1291#0" expanded="true" />
+            <element signature="e#1548#1735#0" expanded="false" />
+            <element signature="e#1776#1898#0" expanded="false" />
+            <element signature="e#1934#2255#0" expanded="false" />
+            <element signature="e#2709#2849#0" expanded="true" />
+            <element signature="e#3367#3486#0" expanded="true" />
+            <element signature="e#3630#3706#0" expanded="true" />
+            <element signature="e#3765#4068#0" expanded="false" />
+            <element signature="e#4075#4148#0" expanded="true" />
+            <element signature="e#4590#4665#0" expanded="true" />
+            <element signature="e#5284#5374#0" expanded="true" />
+            <element signature="e#5584#5987#0" expanded="false" />
+            <element signature="e#6045#6269#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
