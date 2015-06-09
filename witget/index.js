@@ -6,7 +6,6 @@
     var placeholderTmpl = "<tr class=\"placeholder\"><td colspan=\"3\">Drop file</td></tr>";
     var currenttable;
 
-
     document.addEventListener("mouseup", function(ev) {
         if (!currenttable) {
             return;
@@ -21,7 +20,6 @@
                 currenttable._removeRow(currenttable.dragObject.element);
             }
 
-            var droppedRow = currenttable.dragObject.element;
             currenttable.dragObject = null;
             //currenttable.onDrop(currenttable.table, droppedRow);
 
@@ -29,7 +27,7 @@
         }
     });
 
-    function widget(element) {
+    function Widget(element) {
         // wrapper
         var self = this;
         self.element = element;
@@ -76,17 +74,14 @@
         self.table.ondrop = onDrop;
         self.position = self.getPosition(element);
 
-        element.addEventListener("mouseup", function(ev) {
-            var coords = self.mouseCoords(ev);
-
+        element.addEventListener("mouseup", function() {
             if (!self.dragObject) {
                 self._addRow(currenttable.dragObject.data);
             }
         });
     }
 
-    /** Get the position of an element by going up the DOM tree and adding up all the offsets */
-    widget.prototype.getPosition = function(e) {
+    Widget.prototype.getPosition = function(e) {
         var left = 0;
         var top = 0;
         var right = e.offsetWidth;
@@ -104,8 +99,7 @@
         return { x: left, y: top, right: left + right, bottom: top + bottom };
     };
 
-    /** Get the mouse coordinates from the event (allowing for browser differences) */
-    widget.prototype.mouseCoords = function(ev) {
+    Widget.prototype.mouseCoords = function(ev) {
         if (ev.pageX || ev.pageY) {
             return { x: ev.pageX, y: ev.pageY };
         }
@@ -115,7 +109,7 @@
         };
     };
 
-    widget.prototype.makeDraggable = function(item, data) {
+    Widget.prototype.makeDraggable = function(item, data) {
         var self = this;
 
         if (!item) {
@@ -132,7 +126,7 @@
         item.style.cursor = "move";
     };
 
-    widget.prototype._removeRow = function(row) {
+    Widget.prototype._removeRow = function(row) {
         var self = this,
             tbody = this.table.querySelector("tbody");
 
@@ -142,7 +136,7 @@
     };
 
     // add row to table.
-    widget.prototype._addRow = function(data) {
+    Widget.prototype._addRow = function(data) {
         var self = this;
         var row = document.createElement("tr"),
             tbody = this.table.querySelector("tbody"),
@@ -162,9 +156,9 @@
         self.position = self.getPosition(self.element);
     };
 
-    widget.prototype.serialize = function() {
+    /*Widget.prototype.serialize = function() {
 
-    };
+    };*/
 
     // Format input date.
     function formatDate(date) {
@@ -179,9 +173,8 @@
 
     window.uploadWidget = {
         create: function(element) {
-            return new widget(element);
-        },
-
+            return new Widget(element);
+        }
     };
 
 })(window);
