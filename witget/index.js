@@ -1,25 +1,51 @@
 /**
  * Created by zauri_000 on 08.06.2015.
  */
-(function (window) {
+(function(window) {
+
+    var placeholderTmpl = "<tr class=\"placeholder\"><td colspan=\"3\">Drop file</td></tr>";
+    var currenttable;
+
+
+    document.addEventListener("mouseup", function(ev) {
+        if (!currenttable) {
+            return;
+        }
+
+        var coords = currenttable.mouseCoords(ev);
+
+        if (currenttable.dragObject) {
+            currenttable.position = currenttable.getPosition(currenttable.element);
+
+            if (coords.x < currenttable.position.x || coords.x > currenttable.position.right || coords.y < currenttable.position.y || coords.y > currenttable.position.bottom) {
+                currenttable._removeRow(currenttable.dragObject.element);
+            }
+
+            var droppedRow = currenttable.dragObject.element;
+            currenttable.dragObject = null;
+            //currenttable.onDrop(currenttable.table, droppedRow);
+
+            currenttable = null;
+        }
+    });
 
     function widget(element) {
         // wrapper
         var self = this;
+        self.element = element;
         self.wrapper = document.createElement("div");
         self.wrapper.className = "wrapper";
         element.parentElement.insertBefore(self.wrapper, element);
         self.wrapper.appendChild(element);
 
         element.innerHTML = "<table class=\"data-table\">" +
-            "<colgroup><col width=\"150\"><col width=\"50\"><col width=\"100\"></colgroup>" +
+            "<colgroup><col width=\"200\"><col width=\"70\"><col width=\"130\"></colgroup>" +
             "<thead><tr><th>Name</th><th>Size</th><th>date modified</th></tr></thead>" +
-            "<tbody></tbody>" +
-            "<tfoot><tr><td colspan=\"3\"><a href=\"#\">Add file</a></td></tr></tfoot></table>";
+            "<tbody>" + placeholderTmpl + "</tbody>";
 
         self.table = element.querySelector("table");
 
-        var onDragover = function (e) {
+        var onDragover = function(e) {
             e.preventDefault();
 
             if (!/\shover/.test(self.table.className)) {
@@ -27,16 +53,17 @@
             }
         };
 
-        var onDragleave = function (e) {
+        var onDragleave = function(e) {
             e.preventDefault();
             self.table.className = self.table.className.replace(" hover", "");
         };
 
-        var onDrop = function (e) {
+        var onDrop = function(e) {
             e.preventDefault();
 
             var file = e.dataTransfer.files[0];
 
+            self.table.className = self.table.className.replace(" hover", "");
             file && self._addRow(file);
         };
 
@@ -47,13 +74,80 @@
         self.table.ondragover = onDragover;
         self.table.ondragleave = onDragleave;
         self.table.ondrop = onDrop;
+        self.position = self.getPosition(element);
 
-        console.log(element.parentElement);
+        element.addEventListener("mouseup", function(ev) {
+            var coords = self.mouseCoords(ev);
+
+            if (!self.dragObject) {
+                self._addRow(currenttable.dragObject.data);
+            }
+        });
     }
 
+    /** Get the position of an element by going up the DOM tree and adding up all the offsets */
+    widget.prototype.getPosition = function(e) {
+        var left = 0;
+        var top = 0;
+        var right = e.offsetWidth;
+        var bottom = e.offsetHeight;
+
+        while (e.offsetParent) {
+            left += e.offsetLeft;
+            top += e.offsetTop;
+            e = e.offsetParent;
+        }
+
+        left += e.offsetLeft;
+        top += e.offsetTop;
+
+        return { x: left, y: top, right: left + right, bottom: top + bottom };
+    };
+
+    /** Get the mouse coordinates from the event (allowing for browser differences) */
+    widget.prototype.mouseCoords = function(ev) {
+        if (ev.pageX || ev.pageY) {
+            return { x: ev.pageX, y: ev.pageY };
+        }
+        return {
+            x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+            y: ev.clientY + document.body.scrollTop - document.body.clientTop
+        };
+    };
+
+    widget.prototype.makeDraggable = function(item, data) {
+        var self = this;
+
+        if (!item) {
+            return;
+        }
+
+        item.onmousedown = function(ev) {
+            ev.preventDefault();
+
+            currenttable = self;
+            self.dragObject = { element: this, data: data };
+        };
+
+        item.style.cursor = "move";
+    };
+
+    widget.prototype._removeRow = function(row) {
+        var self = this,
+            tbody = this.table.querySelector("tbody");
+
+        tbody.removeChild(row);
+        !tbody.querySelectorAll("tr").length && (tbody.innerHTML = placeholderTmpl);
+        self.position = self.getPosition(self.element);
+    };
+
     // add row to table.
-    widget.prototype._addRow = function (data) {
-        var row = document.createElement("tr");
+    widget.prototype._addRow = function(data) {
+        var self = this;
+        var row = document.createElement("tr"),
+            tbody = this.table.querySelector("tbody"),
+            placeholder = tbody.querySelector("tr.placeholder");
+
         row.innerHTML = "<td></td><td></td><td></td>";
 
         var cells = row.querySelectorAll("td");
@@ -61,10 +155,14 @@
         cells[1].appendChild(document.createTextNode(data.size));
         cells[2].appendChild(document.createTextNode(formatDate(data.lastModifiedDate)));
 
-        this.table.querySelector("tbody").appendChild(row);
+        placeholder && tbody.removeChild(placeholder);
+        this.makeDraggable(row, data);
+        tbody.appendChild(row);
+
+        self.position = self.getPosition(self.element);
     };
 
-    widget.prototype.serialize = function () {
+    widget.prototype.serialize = function() {
 
     };
 
@@ -80,10 +178,9 @@
     }
 
     window.uploadWidget = {
-        create: function (element) {
+        create: function(element) {
             return new widget(element);
         },
-
 
     };
 

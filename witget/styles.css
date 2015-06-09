@@ -2,6 +2,25 @@
     width: 100%;
     border: 1px solid darkgray;
     background-color: lightgray;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    height: 30px;
+    background-color: gray;
+}
+
+.data-table th:first-child{
+    text-align: left;
+}
+
+.data-table th:last-child{
+    text-align: right;
+}
+
+.data-table tbody tr {
+    height: 30px;
+    border-top: 1px solid gray;
 }
 
 .data-table.hover {
@@ -11,4 +30,20 @@
 
 .data-table td {
     word-break: break-all;
+    padding: 5px;
+    text-align: center;
+}
+
+.data-table td:first-child {
+    text-align: left;
+}
+
+.data-table td:last-child {
+    text-align: right;
+}
+
+.data-table tr.placeholder td {
+    height: 100px;
+    vertical-align: middle;
+    text-align: center;
 }
